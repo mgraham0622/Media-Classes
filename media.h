@@ -13,7 +13,8 @@ class media{
   
   // overloaded assignment operator
   media& operator=(const media& source);
-
+  
+  // destructor
   ~media();
   
 };
