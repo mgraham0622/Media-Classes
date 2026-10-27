@@ -1,9 +1,9 @@
 #include <iostream>
 #include <vector>
-#include "media.h"
-#include "game.h"
-#include "song.h"
-#include "film.h"
+#include "Media.h"
+#include "Game.h"
+#include "Song.h"
+#include "Film.h"
 
 using namespace std;
 

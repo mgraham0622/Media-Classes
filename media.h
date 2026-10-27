@@ -1,9 +1,13 @@
-#ifndef MEDIA_H_
-#define MEDIA_H_
+#ifndef MEDIA_HEADER
+#define MEDIA_HEADER
+
+/*
+  Created by Matthew G (referencing Rule of Three Implementation video by ReelLearning on YT)
+*/
 
 #include <iostream>
 
-class media{
+class Media{
 private:
   static const int default_year = -1;
   static const char default_title[] = "No Title";
@@ -12,21 +16,21 @@ private:
   
 public:
   // constructor
-  media(int year = default_year,char* title = &default_title); 
+  Media(int year = default_year,char* title = &default_title); 
   
   // copy constructor
-  media(const media& source);
+  Media(const Media& source);
   
   // overloaded assignment operator
-  media& operator=(const media& source);
+  Media& operator=(const Media& source);
   
   // destructor
-  ~media();
+  ~Media();
 
   virtual int get_year();
 
-  virtual void get_title(char returnString[]);
+  virtual void get_title(char (&returnString)[]);
     
 };
 
-#endif /* MEDIA_H_ */
+#endif
