@@ -4,10 +4,16 @@
 #include <iostream>
 
 class media{
- public:
+private:
+  static const int default_year = -1;
+  static const char default_title[] = "No Title";
+  int year;
+  char title[];
+  
+public:
   // constructor
-  media(char title[] = "No Title", int year = -1,char creator[] = "No Creator");
-
+  media(int year = default_year,char* title = &default_title); 
+  
   // copy constructor
   media(const media& source);
   
@@ -16,7 +22,11 @@ class media{
   
   // destructor
   ~media();
-  
+
+  virtual int get_year();
+
+  virtual void get_title(char returnString[]);
+    
 };
 
 #endif /* MEDIA_H_ */
