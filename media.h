@@ -8,6 +8,10 @@
 #include <iostream>
 
 class Media{
+
+  // allows << operator to access private class vars for printing
+  friend std::ostream& operator<<(std::ostream& os,const Media& source);
+  
 private:
   static const int default_year = -1;
   static const char default_title[9] = "No Title";

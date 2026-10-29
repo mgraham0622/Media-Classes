@@ -6,6 +6,15 @@
 
 using namespace std;
 
+ostream& operator<<(ostream& os, const Media& source){
+  char endcap[11] = "----------";
+  char titleLabel[8] = "Title: ";
+  char yearLabel[7] = "Year: ";
+  os << endcap << endl;
+  os << titleLabel << *(source.title) << endl;
+  os << yearLabel << source.year << endl;
+  os << endcap;
+}
 Media::Media(const int year,const char* title){
   this->year = year;
   this->title = new char[strlen(*title)+1];
