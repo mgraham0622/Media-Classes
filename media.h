@@ -34,7 +34,7 @@ public:
   // functions to return private variables
   virtual int get_year();
 
-  virtual void get_title(char (&returnString)[]);
+  virtual void get_title(char* returnString);
 
     
 };

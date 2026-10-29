@@ -38,4 +38,9 @@ Media& Media::operator=(const Media& source){
 Media::~Media(){
   delete[] this->title; 
 }
-
+void Media::get_year(){
+  return this->year;
+}
+void Media::get_title(char* returnString){
+  strcpy(returnString,this->title)
+}
