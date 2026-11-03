@@ -11,26 +11,27 @@ ostream& operator<<(ostream& os, const Media& source){
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   os << endcap << endl;
-  os << titleLabel << *(source.title) << endl;
+  os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << endcap;
+  return os << endl;
 }
 Media::Media(const int year,const char* title){
   this->year = year;
-  this->title = new char[strlen(*title)+1];
+  this->title = new char[strlen(title)+1];
   strcpy(this->title,title);
 }
-Media::Media(const media& source){
+Media::Media(const Media& source){
   this->year = source.year;
-  this->title = new char[strlen(*source.title)+1];
+  this->title = new char[strlen(source.title)+1];
   strcpy(this->title,source.title);
 }
 Media& Media::operator=(const Media& source){
-  if (*this == source){
+  if (this == &source){
     return *this;
   } else {
     this->year = source.year;
-    this->title = new char[strlen(*source.title)+1];
+    this->title = new char[strlen(source.title)+1];
     strcpy(this->title,source.title);
     return *this;
   }
@@ -38,9 +39,9 @@ Media& Media::operator=(const Media& source){
 Media::~Media(){
   delete[] this->title; 
 }
-void Media::get_year(){
+int Media::get_year(){
   return this->year;
 }
 void Media::get_title(char* returnString){
-  strcpy(returnString,this->title)
+  strcpy(returnString,this->title);
 }

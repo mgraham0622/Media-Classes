@@ -14,13 +14,13 @@ class Media{
   
 private:
   static const int default_year = -1;
-  static const char default_title[9] = "No Title";
+  static constexpr char default_title[9] = "No Title";
   int year;
   char* title;
   
 public:
   // constructor
-  Media(const int year = default_year,const char* title = &default_title); 
+  Media(const int year = default_year,const char* title = default_title); 
   
   // copy constructor (unnecessary)
   Media(const Media& source);
