@@ -12,7 +12,7 @@ class Media{
   // allows << operator to access private class vars for printing
   friend std::ostream& operator<<(std::ostream& os,const Media& source);
   
-private:
+protected:
   static const int default_year = -1;
   static constexpr char default_title[9] = "No Title";
   int year;
@@ -29,12 +29,12 @@ public:
   Media& operator=(const Media& source);
   
   // destructor
-  ~Media();
+  virtual ~Media();
 
-  // functions to return private variables
-  virtual int get_year();
+  // functions to return protected variables
+  int get_year();
 
-  virtual void get_title(char* returnString);
+  void get_title(char* returnString);
 
     
 };

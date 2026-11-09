@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "Media.h"
-/*
 #include "Game.h"
+/*
 #include "Song.h"
 #include "Film.h"
 */
@@ -10,18 +10,18 @@
 using namespace std;
 
 int main(){
-  Media* media1 = new Media(2000,"asd");
-  Media* media2 = new Media(1993,"fgh");
+  Game* media1 = new Game(2000,"asd",5.6,"blizzard");
+  Game* media2 = new Game(1993,"fgh",9.9,"ubislop");
   char title[] = "failed";
 
   cout << *media1;
   cout << *media2;
 
-  cout << (*media1).get_year() << endl;
-  (*media2).get_title(title);
+  cout << (*media1).get_rating() << endl;
+  (*media2).get_publisher(title);
   cout << title << endl;
 
-  Media* media3 = new Media(*media1);
+  Game* media3 = new Game(*media1);
   
   (*media1) = (*media2);
 
@@ -31,6 +31,7 @@ int main(){
 
   delete media1;
 
-  cout << *media1.title;
- 
+  (*media1).get_publisher(title);
+  cout << title;
+  
 }
