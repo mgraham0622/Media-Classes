@@ -46,6 +46,7 @@ Game& Game::operator=(const Game& source){
 }
 Game::~Game(){
   delete[] this->publisher; 
+  this->publisher = nullptr;
 }
 float Game::get_rating(){
   return this->rating;
