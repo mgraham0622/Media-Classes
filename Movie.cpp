@@ -42,6 +42,7 @@ Movie& Movie::operator=(const Movie& source){
   } else {
     Media::operator=(source);
     this->rating = source.rating;
+    delete[] this->director;
     this->director = new char[strlen(source.director)+1];
     strcpy(this->director,source.director);
     this->duration = source.duration;
