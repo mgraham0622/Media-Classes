@@ -44,8 +44,10 @@ Music& Music::operator=(const Music& source){
   } else {
     Media::operator=(source);
     this->duration = source.duration;
+    delete[] this->publisher; 
     this->publisher = new char[strlen(source.publisher)+1];
     strcpy(this->publisher,source.publisher);
+    delete[] this->artist;
     this->artist = new char[strlen(artist)+1];
     strcpy(this->artist,artist);
     return *this;
@@ -53,7 +55,9 @@ Music& Music::operator=(const Music& source){
 }
 Music::~Music(){
   delete[] this->publisher;
+  this->publisher = nullptr;
   delete[] this->artist; 
+  this->artist = nullptr;
 }
 float Music::get_duration(){
   return this->duration;
