@@ -31,6 +31,7 @@ Media& Media::operator=(const Media& source){
     return *this;
   } else {
     this->year = source.year;
+    delete[] this->title;
     this->title = new char[strlen(source.title)+1];
     strcpy(this->title,source.title);
     return *this;
@@ -38,6 +39,7 @@ Media& Media::operator=(const Media& source){
 }
 Media::~Media(){
   delete[] this->title; 
+  this->title = nullptr;
 }
 int Media::get_year(){
   return this->year;
