@@ -2,10 +2,9 @@
 #include <vector>
 #include "Media.h"
 #include "Game.h"
-/*
-#include "Song.h"
-#include "Film.h"
-*/
+#include "Music.h"
+#include "Movie.h"
+
 
 using namespace std;
 
@@ -29,9 +28,10 @@ int main(){
   cout << *media2;
   cout << *media3;
 
+  (*media1).get_title(title);
+  
   delete media1;
 
-  (*media1).get_publisher(title);
   cout << title;
   
 }
