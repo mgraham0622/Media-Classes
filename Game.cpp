@@ -38,6 +38,7 @@ Game& Game::operator=(const Game& source){
   } else {
     Media::operator=(source);
     this->rating = source.rating;
+    delete[] this->publisher;
     this->publisher = new char[strlen(source.publisher)+1];
     strcpy(this->publisher,source.publisher);
     return *this;
