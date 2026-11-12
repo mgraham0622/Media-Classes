@@ -51,6 +51,7 @@ Movie& Movie::operator=(const Movie& source){
 }
 Movie::~Movie(){
   delete[] this->director; 
+  this->director = nullptr;
 }
 float Movie::get_rating(){
   return this->rating;
