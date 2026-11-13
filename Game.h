@@ -36,7 +36,7 @@ public:
 
   void get_publisher(char* returnString);
 
-    
+  virtual int get_type();
 };
 
 #endif

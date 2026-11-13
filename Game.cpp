@@ -9,11 +9,13 @@ using namespace std;
 
 ostream& operator<<(ostream& os, const Game& source){
   char endcap[11] = "----------";
+  char mediaLabel[17] = "Media Type: Game";
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   char ratingLabel[9] = "Rating: ";
   char publisherLabel[12] = "Publisher: ";
   os << endcap << endl;
+  os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << ratingLabel << source.rating << endl;
@@ -53,4 +55,7 @@ float Game::get_rating(){
 }
 void Game::get_publisher(char* returnString){
   strcpy(returnString,this->publisher);
+}
+int Game::get_type(){
+  return 1
 }

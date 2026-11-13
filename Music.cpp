@@ -9,12 +9,14 @@ using namespace std;
 
 ostream& operator<<(ostream& os, const Music& source){
   char endcap[11] = "----------";
+  char mediaLable[18] = "Media Type: Music";
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   char durationLabel[11] = "Duration: ";
   char publisherLabel[12] = "Publisher: ";
   char artistLabel[9] = "Artist: ";
   os << endcap << endl;
+  os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << durationLabel << source.duration << endl;
@@ -67,4 +69,7 @@ void Music::get_publisher(char* returnString){
 }
 void Music::get_artist(char* returnString){
   strcpy(returnString,this->publisher);
+}
+int Music::get_type(){
+  return 2;
 }

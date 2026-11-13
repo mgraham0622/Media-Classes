@@ -39,7 +39,8 @@ public:
   void get_publisher(char* returnString);
 
   void get_artist(char* returnString);
-    
+
+  virtual int get_type();
 };
 
 #endif

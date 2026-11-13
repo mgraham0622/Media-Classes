@@ -39,7 +39,8 @@ public:
   void get_director(char* returnString);
 
   int get_duration();
-    
+
+  virtual int get_type();
 };
 
 #endif

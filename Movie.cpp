@@ -9,12 +9,14 @@ using namespace std;
 
 ostream& operator<<(ostream& os, const Movie& source){
   char endcap[11] = "----------";
+  char mediaLabel[18] = "Media Type: Movie";
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   char ratingLabel[9] = "Rating: ";
   char directorLabel[11] = "Director: ";
   char durationLabel[11] = "Duration: ";
   os << endcap << endl;
+  os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << ratingLabel << source.rating << endl;
@@ -62,4 +64,7 @@ void Movie::get_director(char* returnString){
 
 int Movie::get_duration(){
   return this->duration;
+}
+int Movie::get_type(){
+  return 3;
 }
