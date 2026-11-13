@@ -121,10 +121,24 @@ void search(const vector<media*> input, vector<media*> &output){
   if (getYN(titleYN) == true){
     //get title
     getTextInput(word,titlePr);
-    
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (strcmp((**it).get_title(),word) == 0){
+	temp.push_back(*it);
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(yearYN) == true){
     //get year
+    getIntInput(number,yearPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if ((**it).get_year() == number){
+        temp.push_back(*it);
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(publisherYN) == true){
     // eliminate standard media
@@ -136,6 +150,16 @@ void search(const vector<media*> input, vector<media*> &output){
       possibleClasses.erase(ranges::find(possibleClasses,3));
     }
     //get publisher
+    getTextInput(word,publisherPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+	if (strcmp((**it).get_publisher(),word) == 0){
+	  temp.push_back(*it);
+	}
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(durationYN) == true){
     // eliminate standard media
@@ -147,6 +171,16 @@ void search(const vector<media*> input, vector<media*> &output){
       possibleClasses.erase(ranges::find(possibleClasses,1));
     }
     //get duration
+    getIntInput(number,durationPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+        if ((**it).get_duration() == number){
+          temp.push_back(*it);
+        }
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(ratingYN) == true){
     // eliminate standard media
@@ -158,6 +192,16 @@ void search(const vector<media*> input, vector<media*> &output){
       possibleClasses.erase(ranges::find(possibleClasses,2));
     }
     // get rating
+    getFloatInput(decimal,ratingPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+        if ((**it).get_rating() == decimal){
+          temp.push_back(*it);
+        }
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(directorYN) == true){
     // eliminate everything but movies
@@ -167,6 +211,16 @@ void search(const vector<media*> input, vector<media*> &output){
       possibleClasses = {};
    }
     // get director
+    getTextInput(word,directorPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+        if (strcmp((**it).get_director(),word) == 0){
+          temp.push_back(*it);
+        }
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (getYN(artistYN) == true){
     // eliminate everything but music
@@ -176,6 +230,16 @@ void search(const vector<media*> input, vector<media*> &output){
       possibleClasses = {};
     }
     // get artist
+    getTextInput(word,artistPr);
+    for (auto it = output.begin(); it != output.end(); it++){
+      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+        if (strcmp((**it).get_artist(),word) == 0){
+          temp.push_back(*it);
+        }
+      }
+    }
+    output = temp;
+    temp = {};
   }
   if (output.empty()){
     char emptyPrompt[32] = "No Results Matched Your Search.";
