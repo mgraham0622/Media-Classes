@@ -6,6 +6,8 @@
 #include "Movie.h"
 #include <limits>
 #include <cstring>
+#include <algorithm>
+#include <ranges>
 
 using namespace std;
 
@@ -46,7 +48,7 @@ bool getYN(char prompt[] = "y/n?: "){
 }
 
 // gets text input using a passed in prompt and assigns it to the char passed in
-void getTextInput(char (&input)[81], char prompt[81]){
+void getTextInput(char (&input)[], char prompt[]){
   cout << prompt;
   cin.getline(input,numeric_limits<streamsize>::max());
 }
@@ -84,8 +86,38 @@ void search(const vector<media*> input, vector<media*> output){
   char ratingPr[35] = "enter rating (0.0 to 10.0): ";
   char directorYN[35] = "search by director? (y/n): ";
   char directorPr[35] = "enter director name: ";
-  char dialogue1[35] = "search by artist? (y/n): ";
-  char dialogue1[35] = "enter artist name: ";
+  char artistYN[35] = "search by artist? (y/n): ";
+  char artistPr[35] = "enter artist name: ";
+  vector<media*> temp = {};
+  // a list holding all class 'id's' returned by get_type, 0 is media, 1 is game, 2 is music, 3 is movie
+  vector<int> possibleClasses = {0,1,2,3};
+  output = input;
+  if (getYN(titleYN) == true){}
+  if (getYN(yearYN) == true){}
+  if (getYN(publisherYN) == true){
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
+    if (ranges::find(possibleClasses,3) != possibleClasses.end()){}
+  }
+  if (getYN(durationYN) == true){
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
+  }
+  if (getYN(ratingYN) == true){
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
+  }
+  if (getYN(directorYN) == true){
+    if (ranges::find(possibleClasses,3) != possibleClasses.end()){
+      possibleClasses = {3};
+    } else {
+      possibleClasses = {};
+   }
+  }
+  if (getYN(artistYN) == true){
+    if (ranges::find(possibleClasses,2) != possibleClasses.end()){
+      possibleClasses = {2};
+    } else {
+      possibleClasses = {};
+    }
+  }
 }
 
 
