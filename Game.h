@@ -32,9 +32,9 @@ public:
   virtual ~Game();
 
   // functions to return private variables
-  float get_rating();
+  virtual float get_rating();
 
-  void get_publisher(char* returnString);
+  virtual void get_publisher(char* returnString);
 
   virtual int get_type();
 };

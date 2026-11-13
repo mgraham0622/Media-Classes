@@ -16,7 +16,7 @@ private:
   static const int default_duration = -3660;
   static constexpr char default_publisher[13] = "No Publisher";
   static constexpr char default_artist[10] = "No Artist";
-  float duration;
+  int duration;
   char* publisher;
   char* artist;
   
@@ -34,11 +34,11 @@ public:
   virtual ~Music();
 
   // functions to return private variables
-  float get_duration();
+  virtual int get_duration();
 
-  void get_publisher(char* returnString);
+  virtual void get_publisher(char* returnString);
 
-  void get_artist(char* returnString);
+  virtual void get_artist(char* returnString);
 
   virtual int get_type();
 };

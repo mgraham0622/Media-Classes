@@ -57,5 +57,5 @@ void Game::get_publisher(char* returnString){
   strcpy(returnString,this->publisher);
 }
 int Game::get_type(){
-  return 1
+  return 1;
 }

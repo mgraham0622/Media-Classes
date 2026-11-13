@@ -34,11 +34,11 @@ public:
   virtual ~Movie();
 
   // functions to return private variables
-  float get_rating();
+  virtual float get_rating();
 
-  void get_director(char* returnString);
+  virtual void get_director(char* returnString);
 
-  int get_duration();
+  virtual int get_duration();
 
   virtual int get_type();
 };

@@ -9,7 +9,7 @@ using namespace std;
 
 ostream& operator<<(ostream& os, const Music& source){
   char endcap[11] = "----------";
-  char mediaLable[18] = "Media Type: Music";
+  char mediaLabel[18] = "Media Type: Music";
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   char durationLabel[11] = "Duration: ";
@@ -61,7 +61,7 @@ Music::~Music(){
   delete[] this->artist; 
   this->artist = nullptr;
 }
-float Music::get_duration(){
+int Music::get_duration(){
   return this->duration;
 }
 void Music::get_publisher(char* returnString){

@@ -13,7 +13,7 @@ using namespace std;
 
 void strip(char (&input)[]){
   // establishes variables used
-  char temp[] = "";
+  char temp[strlen(input)+1];
   int length;
   char ch1;
 
@@ -35,7 +35,7 @@ void strip(char (&input)[]){
 
 void lower(char (&input)[]){
   // establishes variables used
-  char temp[] = "";
+  char temp[strlen(input)+1];
   int length;
   char ch1;
 
@@ -52,21 +52,23 @@ void lower(char (&input)[]){
   strcpy(input,temp);
 }
 
-bool getYN(char prompt[] = "y/n?: "){
+bool getYN(const char prompt[] = "y/n?: "){
   char input = ' ';
   bool noValue = true;
+  bool returnValue;
   while(noValue){
     cout << prompt;
     cin >> input;
     cin.ignore(numeric_limits<streamsize>::max(),'\n');
     if(tolower(input) == 'y'){
       noValue = false;
-      return true;
-    } elif (tolower(input) == 'n'){
+      returnValue =  true;
+    } else if (tolower(input) == 'n'){
       noValue = false;
-      return true;
+      returnValue = false;
     }
   }
+  return returnValue;
 }
 
 // gets text input using a passed in prompt and assigns it to the char passed in
@@ -115,7 +117,7 @@ void getFloatInput(float &input, char prompt[]){
 }
 
 
-void search(const vector<media*> input, vector<media*> &output){
+void search(const vector<Media*> input, vector<Media*> &output){
   char titleYN[35] = "search by title? (y/n): ";
   char titlePr[35] = "enter title: ";
   char yearYN[35] = "search by year? (y/n): ";
@@ -130,10 +132,11 @@ void search(const vector<media*> input, vector<media*> &output){
   char directorPr[35] = "enter director name: ";
   char artistYN[35] = "search by artist? (y/n): ";
   char artistPr[35] = "enter artist name: ";
-  vector<media*> temp = {};
+  vector<Media*> temp = {};
   // a list holding all class 'id's' returned by get_type, 0 is media, 1 is game, 2 is music, 3 is movie
   vector<int> possibleClasses = {0,1,2,3};
-  char word[] = "";
+  char word[];
+  char returnWord[];
   int number = 0;
   float decimal = 0.0;
 
@@ -144,7 +147,8 @@ void search(const vector<media*> input, vector<media*> &output){
     //get title
     getTextInput(word,titlePr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (strcmp((**it).get_title(),word) == 0){
+      (**it).get_title(returnWord);
+      if (strcmp(returnWord,word) == 0){
 	temp.push_back(*it);
       }
     }
@@ -164,18 +168,19 @@ void search(const vector<media*> input, vector<media*> &output){
   }
   if (getYN(publisherYN) == true){
     // eliminate standard media
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,0));
+    if (find(possibleClasses.begin(),possibleClasses.end(),0) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),0));
     }
     // eliminate movies
-    if (ranges::find(possibleClasses,3) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,3));
+    if (find(possibleClasses.begin(),possibleClasses.end(),3) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),3));
     }
     //get publisher
     getTextInput(word,publisherPr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
-	if (strcmp((**it).get_publisher(),word) == 0){
+      if (find(possibleClasses.begin(),possibleClasses.end(),(**it).get_type()) != possibleClasses.end()){
+	(**it).get_publisher(returnWord);
+	if (strcmp(returnWord,word) == 0){
 	  temp.push_back(*it);
 	}
       }
@@ -185,17 +190,17 @@ void search(const vector<media*> input, vector<media*> &output){
   }
   if (getYN(durationYN) == true){
     // eliminate standard media
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,0));
+    if (find(possibleClasses.begin(),possibleClasses.end(),0) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),0));
     }
     // eliminate video games
-    if (ranges::find(possibleClasses,1) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,1));
+    if (find(possibleClasses.begin(),possibleClasses.end(),1) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),1));
     }
     //get duration
     getIntInput(number,durationPr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+      if (find(possibleClasses.begin(),possibleClasses.end(),(**it).get_type()) != possibleClasses.end()){
         if ((**it).get_duration() == number){
           temp.push_back(*it);
         }
@@ -206,17 +211,17 @@ void search(const vector<media*> input, vector<media*> &output){
   }
   if (getYN(ratingYN) == true){
     // eliminate standard media
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,0));
+    if (find(possibleClasses.begin(),possibleClasses.end(),0) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),0));
     }
     //eliminate music
-    if (ranges::find(possibleClasses,2) != possibleClasses.end()){
-      possibleClasses.erase(ranges::find(possibleClasses,2));
+    if (find(possibleClasses.begin(),possibleClasses.end(),2) != possibleClasses.end()){
+      possibleClasses.erase(find(possibleClasses.begin(),possibleClasses.end(),2));
     }
     // get rating
     getFloatInput(decimal,ratingPr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
+      if (find(possibleClasses.begin(),possibleClasses.end(),(**it).get_type()) != possibleClasses.end()){
         if ((**it).get_rating() == decimal){
           temp.push_back(*it);
         }
@@ -227,7 +232,7 @@ void search(const vector<media*> input, vector<media*> &output){
   }
   if (getYN(directorYN) == true){
     // eliminate everything but movies
-    if (ranges::find(possibleClasses,3) != possibleClasses.end()){
+    if (find(possibleClasses.begin(),possibleClasses.end(),3) != possibleClasses.end()){
       possibleClasses = {3};
     } else {
       possibleClasses = {};
@@ -235,8 +240,9 @@ void search(const vector<media*> input, vector<media*> &output){
     // get director
     getTextInput(word,directorPr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
-        if (strcmp((**it).get_director(),word) == 0){
+      if (find(possibleClasses.begin(),possibleClasses.end(),(**it).get_type()) != possibleClasses.end()){
+	(**it).get_director(returnWord);
+	if (strcmp(returnWord,word) == 0){
           temp.push_back(*it);
         }
       }
@@ -246,7 +252,7 @@ void search(const vector<media*> input, vector<media*> &output){
   }
   if (getYN(artistYN) == true){
     // eliminate everything but music
-    if (ranges::find(possibleClasses,2) != possibleClasses.end()){
+    if (find(possibleClasses.begin(),possibleClasses.end(),2) != possibleClasses.end()){
       possibleClasses = {2};
     } else {
       possibleClasses = {};
@@ -254,8 +260,9 @@ void search(const vector<media*> input, vector<media*> &output){
     // get artist
     getTextInput(word,artistPr);
     for (auto it = output.begin(); it != output.end(); it++){
-      if (ranges::find(possibleClasses,(**it).get_type()) != possibleClasses.end()){
-        if (strcmp((**it).get_artist(),word) == 0){
+      if (find(possibleClasses.begin(),possibleClasses.end(),(**it).get_type()) != possibleClasses.end()){
+	(**it).get_artist(returnWord);
+	if (strcmp(returnWord,word) == 0){
           temp.push_back(*it);
         }
       }
@@ -285,7 +292,7 @@ void remove(vector<Media*> &input){
   search(input,toDelete);
   if (getYN(confirmation) == true){
     for (auto del = toDelete.begin(); del != toDelete.end(); del++){
-      auto it = ranges::find(input,(*del));
+      auto it = find(input.begin(),input.end(),(*del));
       if (it != input.end()){
 	input.erase(it);
 	delete (*it);
@@ -298,12 +305,12 @@ void remove(vector<Media*> &input){
 }
 
 void add(vector<Media*> &input){
-  char typeToAddPrompt[58] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?";
-  char type[] = "";
+  char typeToAddPrompt[60] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?: ";
+  char type[99];
   char tryAgainPrompt[29] = "Not a Valid Type! Try Again!";
   char success[15] = "Object Added!";
   bool hasType = false;
-  vector<char*> types = {"MEDIA","GAME","MUSIC","MOVIE"};
+  vector<const char*> types = {"MEDIA","GAME","MUSIC","MOVIE"};
   int typeNum = -1;
 
   char titlePr[35] = "enter title: ";
@@ -314,68 +321,59 @@ void add(vector<Media*> &input){
   char directorPr[35] = "enter director name: ";
   char artistPr[35] = "enter artist name: ";
 
+  char title[];
+  int year = -1;
+  char artist[];
+  int duration = -1;
+  char publisher[];
+  char director[];
+  float rating = -1.0;
+
   
   while (!hasType){
     getTextInput(type,typeToAddPrompt);
     strip(type);
     for(auto it = types.begin(); it != types.end(); it++){
       if (strcmp(type,*it) == 0){
-	typeNum = it - text.begin();
+	typeNum = it - types.begin();
       }
     }
     switch(typeNum){
     case 0:
-      char title[] = "";
-      int year = -1;
       getTextInput(title,titlePr);
       getIntInput(year,yearPr);
       input.push_back(new Media(year,title));
-      hasType = true
+      hasType = true;
       break;
     case 1:
-      char title[] = "";
-      int year = -1;
-      char publisher[] = "";
-      float rating = -1.0;
       getTextInput(title,titlePr);
       getIntInput(year,yearPr);
       getTextInput(publisher,publisherPr);
       getFloatInput(rating,ratingPr);
       input.push_back(new Game(year,title,rating,publisher));
-      hasType = true
+      hasType = true;
       break;
     case 2:
-      char title[] = "";
-      int year = -1;
-      char artist = "";
-      int duration = -1;
-      char publisher = "";
       getTextInput(title,titlePr);
       getIntInput(year,yearPr);
       getTextInput(artist,artistPr);
       getIntInput(duration,durationPr);
       getTextInput(publisher,publisherPr);
       input.push_back(new Music(year,title,duration,publisher,artist));
-      hasType = true
+      hasType = true;
       break;
     case 3:
-      char title[] = "";
-      int year = -1;
-      char director = "";
-      int duration = -1;
-      float rating = -1.0;
       getTextInput(title,titlePr);
       getIntInput(year,yearPr);
       getIntInput(duration,durationPr);
       getTextInput(director,directorPr);
       getFloatInput(rating,ratingPr);
       input.push_back(new Movie(year,title,rating,director,duration));
-      hasType = true
+      hasType = true;
       break;
     }
-    if (hasType = false){
+    if (hasType == false){
       cout << tryAgainPrompt << endl;
-      type = "";
     } else {
       cout << success << endl;
     }
@@ -383,15 +381,15 @@ void add(vector<Media*> &input){
 }
 
 int main(){
-  char commandPrompt[45] = "Enter a Command (ADD,SEARCH,DELETE, or QUIT)";
-  char emptyList[12] = "The Database is Empty";
-  char quitYN[36] = "Are You Sure You Want To Quit?(y/n)";
+  char commandPrompt[47] = "Enter a Command (ADD,SEARCH,DELETE, or QUIT): ";
+  char emptyList[22] = "The Database is Empty";
+  char quitYN[38] = "Are You Sure You Want To Quit?(y/n): ";
   char goodbye[9] = "Goodbye!";
-  char command[] = "";
+  char command[99];
   int commandNum = -1;
-  vector<char*> commands = {"ADD","SEARCH","DELETE","QUIT"};
-  vector<media*> main = {};
-  vector<media*> searchOutput = {};
+  vector<const char*> commands = {"ADD","SEARCH","DELETE","QUIT"};
+  vector<Media*> main = {};
+  vector<Media*> searchOutput = {};
   bool running = true;
   while (running){
     getTextInput(command,commandPrompt);
@@ -404,6 +402,7 @@ int main(){
     switch (commandNum){
     case 0:
       add(main);
+      break;
     case 1:
       if (main.empty()){
 	cout << emptyList << endl;
@@ -411,17 +410,20 @@ int main(){
 	search(main,searchOutput);
 	searchOutput = {};
       }
+      break;
     case 2:
       if (main.empty()){
         cout << emptyList << endl;
       } else {
         remove(main);
       }
+      break;
     case 3:
       if(getYN(quitYN)){
 	running = false;
 	cout << goodbye << endl;
       }
+      break;
     }
   }
 }
