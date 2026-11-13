@@ -11,6 +11,28 @@
 
 using namespace std;
 
+void strip(char (&input)[]){
+  // establishes variables used
+  char temp[] = "";
+  int length;
+  char ch1;
+
+  // gets length of the input carray
+  length = strlen(input);
+
+  // goes through and capitalizes alphanumeric characters and adds them to output
+  for(int i = 0; i<length; i++){
+    ch1 = input[i];
+    if(isalnum(ch1)){
+      ch1 = toupper(ch1);
+      strncat(temp,&ch1,1);
+    }
+  }
+  // sets input to the output
+  strcpy(input,temp);
+}
+
+
 void lower(char (&input)[]){
   // establishes variables used
   char temp[] = "";
@@ -253,6 +275,42 @@ void search(const vector<media*> input, vector<media*> &output){
   }
 }
 
+void remove(vector<Media*> input){
+  char deletePrompt[36] = "Search for what you want to delete:";
+  char confirmation[32] = "Do you want to delete? (y/n)?: ";
+  char success[15] = "Items Deleted!";
+  char noDelete[26] = "Items will Not be Deleted"
+  vector<Media*> toDelete = {};
+  cout << deletePrompt << endl;
+  search(input,toDelete);
+  if (getYN(confirmation) == true){
+    for (auto del = toDelete.begin(); del != toDelete.end(); del++){
+      auto it = range::find(input,(*del));
+      if (it != input.end()){
+	input.erase(it);
+	delete (*it);
+      }
+    }
+    cout << success << endl;
+  } else {
+    cout << noDelete << endl;
+  }
+}
+
+void add(vector<Media*> input){
+  char typeToAddPrompt[58] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?";
+  char type[] = "";
+  char tryAgainPrompt[] = "Not a Valid Type! Try Again!"
+  bool hasType = false;
+  while (!hasType){
+    getTextInput(type,typeToAddPrompt);
+    strip(type);
+    switch(type){
+      
+    }
+    if hasType = false;
+  }
+}
 
 int main(){
   
