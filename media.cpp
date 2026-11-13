@@ -8,9 +8,11 @@ using namespace std;
 
 ostream& operator<<(ostream& os, const Media& source){
   char endcap[11] = "----------";
+  char mediaLabel[18] = "Media Type: Media";
   char titleLabel[8] = "Title: ";
   char yearLabel[7] = "Year: ";
   os << endcap << endl;
+  os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << endcap;
@@ -38,7 +40,8 @@ Media& Media::operator=(const Media& source){
   }
 }
 Media::~Media(){
-  delete[] this->title; 
+  char* = this->title;
+  delete[] this->title;
   this->title = nullptr;
 }
 int Media::get_year(){
@@ -46,4 +49,7 @@ int Media::get_year(){
 }
 void Media::get_title(char* returnString){
   strcpy(returnString,this->title);
+}
+int Media::get_type(){
+  return 0;
 }

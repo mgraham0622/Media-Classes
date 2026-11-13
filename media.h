@@ -35,8 +35,9 @@ public:
   int get_year();
 
   void get_title(char* returnString);
-
-    
+  // virtual function to tell what type/child of media class this is
+  virtual int get_type();
+  
 };
 
 #endif
