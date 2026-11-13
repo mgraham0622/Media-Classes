@@ -279,13 +279,13 @@ void remove(vector<Media*> input){
   char deletePrompt[36] = "Search for what you want to delete:";
   char confirmation[32] = "Do you want to delete? (y/n)?: ";
   char success[15] = "Items Deleted!";
-  char noDelete[26] = "Items will Not be Deleted"
+  char noDelete[26] = "Items will Not be Deleted";
   vector<Media*> toDelete = {};
   cout << deletePrompt << endl;
   search(input,toDelete);
   if (getYN(confirmation) == true){
     for (auto del = toDelete.begin(); del != toDelete.end(); del++){
-      auto it = range::find(input,(*del));
+      auto it = ranges::find(input,(*del));
       if (it != input.end()){
 	input.erase(it);
 	delete (*it);
@@ -300,15 +300,85 @@ void remove(vector<Media*> input){
 void add(vector<Media*> input){
   char typeToAddPrompt[58] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?";
   char type[] = "";
-  char tryAgainPrompt[] = "Not a Valid Type! Try Again!"
+  char tryAgainPrompt[29] = "Not a Valid Type! Try Again!";
+  char success[15] = "Object Added!";
   bool hasType = false;
+  vector<char*> types = {"MEDIA","GAME","MUSIC","MOVIE"};
+  int typeNum = -1;
+
+  char titlePr[35] = "enter title: ";
+  char yearPr[35] = "enter year: ";
+  char publisherPr[35] = "enter publisher name: ";
+  char durationPr[35] = "enter duration in seconds: ";
+  char ratingPr[35] = "enter rating (0.0 to 10.0): ";
+  char directorPr[35] = "enter director name: ";
+  char artistPr[35] = "enter artist name: ";
+
+  
   while (!hasType){
     getTextInput(type,typeToAddPrompt);
     strip(type);
-    switch(type){
-      
+    for(auto it = types.begin(); it != types.end(); it++){
+      if (strcmp(type,*it) == 0){
+	typeNum = it - text.begin();
+      }
     }
-    if hasType = false;
+    switch(typeNum){
+    case 0:
+      char title[] = "";
+      int year = -1;
+      getTextInput(title,titlePr);
+      getIntInput(year,yearPr);
+      input.push_back(new Media(year,title));
+      hasType = true
+      break;
+    case 1:
+      char title[] = "";
+      int year = -1;
+      char publisher[] = "";
+      float rating = -1.0;
+      getTextInput(title,titlePr);
+      getIntInput(year,yearPr);
+      getTextInput(publisher,publisherPr);
+      getFloatInput(rating,ratingPr);
+      input.push_back(new Game(year,title,rating,publisher));
+      hasType = true
+      break;
+    case 2:
+      char title[] = "";
+      int year = -1;
+      char artist = "";
+      int duration = -1;
+      char publisher = "";
+      getTextInput(title,titlePr);
+      getIntInput(year,yearPr);
+      getTextInput(artist,artistPr);
+      getIntInput(duration,durationPr);
+      getTextInput(publisher,publisherPr);
+      input.push_back(new Music(year,title,duration,publisher,artist));
+      hasType = true
+      break;
+    case 3:
+      char title[] = "";
+      int year = -1;
+      char director = "";
+      int duration = -1;
+      float rating = -1.0;
+      getTextInput(title,titlePr);
+      getIntInput(year,yearPr);
+      getIntInput(duration,durationPr);
+      getTextInput(director,directorPr);
+      getFloatInput(rating,ratingPr);
+      input.push_back(new Movie(year,title,rating,director,duration));
+      hasType = true
+      break;
+    }
+    if (hasType = false){
+      cout << tryAgainPrompt << endl;
+      type = "";
+    } else {
+      cout << success << endl;
+    }
   }
 }
 
