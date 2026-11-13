@@ -11,9 +11,9 @@
 
 using namespace std;
 
-void strip(char (&input)[]){
+void strip(char (&input)[99]){
   // establishes variables used
-  char temp[strlen(input)+1];
+  char temp[99] = "";
   int length;
   char ch1;
 
@@ -33,9 +33,9 @@ void strip(char (&input)[]){
 }
 
 
-void lower(char (&input)[]){
+void lower(char (&input)[99]){
   // establishes variables used
-  char temp[strlen(input)+1];
+  char temp[99] = "";
   int length;
   char ch1;
 
@@ -135,8 +135,8 @@ void search(const vector<Media*> input, vector<Media*> &output){
   vector<Media*> temp = {};
   // a list holding all class 'id's' returned by get_type, 0 is media, 1 is game, 2 is music, 3 is movie
   vector<int> possibleClasses = {0,1,2,3};
-  char word[];
-  char returnWord[];
+  char word[99];
+  char returnWord[99];
   int number = 0;
   float decimal = 0.0;
 
@@ -277,7 +277,20 @@ void search(const vector<Media*> input, vector<Media*> &output){
     char resultsPrompt[36] = "These are the Results that Matched:";
     cout << resultsPrompt << endl;
     for (auto it = output.begin(); it != output.end(); it++){
-      cout << (**it);
+      switch((**it).get_type()){
+      case 0:
+	cout << (**it);
+	break;
+      case 1:
+	cout << *(static_cast<Game*>((*it)));
+	break;
+      case 2:
+	cout << *(static_cast<Music*>((*it)));;
+	break;
+      case 3:
+	cout << *(static_cast<Movie*>((*it)));;
+	break;
+      }
     }
   }
 }
@@ -294,8 +307,8 @@ void remove(vector<Media*> &input){
     for (auto del = toDelete.begin(); del != toDelete.end(); del++){
       auto it = find(input.begin(),input.end(),(*del));
       if (it != input.end()){
-	input.erase(it);
 	delete (*it);
+	input.erase(it);
       }
     }
     cout << success << endl;
@@ -321,16 +334,17 @@ void add(vector<Media*> &input){
   char directorPr[35] = "enter director name: ";
   char artistPr[35] = "enter artist name: ";
 
-  char title[];
+  char title[99];
   int year = -1;
-  char artist[];
+  char artist[99];
   int duration = -1;
-  char publisher[];
-  char director[];
+  char publisher[99];
+  char director[99];
   float rating = -1.0;
 
   
   while (!hasType){
+    typeNum = -1;
     getTextInput(type,typeToAddPrompt);
     strip(type);
     for(auto it = types.begin(); it != types.end(); it++){
@@ -392,6 +406,7 @@ int main(){
   vector<Media*> searchOutput = {};
   bool running = true;
   while (running){
+    commandNum = -1;
     getTextInput(command,commandPrompt);
     strip(command);
     for(auto it = commands.begin(); it != commands.end(); it++){
@@ -422,6 +437,10 @@ int main(){
       if(getYN(quitYN)){
 	running = false;
 	cout << goodbye << endl;
+	for (auto it = main.begin(); it != main.end; it++){
+	  delete (*it);
+	  input.erase(it);
+	}
       }
       break;
     }

@@ -21,7 +21,7 @@ ostream& operator<<(ostream& os, const Movie& source){
   os << yearLabel << source.year << endl;
   os << ratingLabel << source.rating << endl;
   os << directorLabel << source.director << endl;
-  os << durationLabel << source.duration;
+  os << durationLabel << source.duration << endl;
   os << endcap;
   return os << endl;
 }
