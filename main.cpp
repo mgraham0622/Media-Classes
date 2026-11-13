@@ -275,7 +275,7 @@ void search(const vector<media*> input, vector<media*> &output){
   }
 }
 
-void remove(vector<Media*> input){
+void remove(vector<Media*> &input){
   char deletePrompt[36] = "Search for what you want to delete:";
   char confirmation[32] = "Do you want to delete? (y/n)?: ";
   char success[15] = "Items Deleted!";
@@ -297,7 +297,7 @@ void remove(vector<Media*> input){
   }
 }
 
-void add(vector<Media*> input){
+void add(vector<Media*> &input){
   char typeToAddPrompt[58] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?";
   char type[] = "";
   char tryAgainPrompt[29] = "Not a Valid Type! Try Again!";
@@ -383,5 +383,45 @@ void add(vector<Media*> input){
 }
 
 int main(){
-  
+  char commandPrompt[45] = "Enter a Command (ADD,SEARCH,DELETE, or QUIT)";
+  char emptyList[12] = "The Database is Empty";
+  char quitYN[36] = "Are You Sure You Want To Quit?(y/n)";
+  char goodbye[9] = "Goodbye!";
+  char command[] = "";
+  int commandNum = -1;
+  vector<char*> commands = {"ADD","SEARCH","DELETE","QUIT"};
+  vector<media*> main = {};
+  vector<media*> searchOutput = {};
+  bool running = true;
+  while (running){
+    getTextInput(command,commandPrompt);
+    strip(command);
+    for(auto it = commands.begin(); it != commands.end(); it++){
+      if (strcmp(command,*it) == 0){
+        commandNum = it - commands.begin();
+      }
+    }
+    switch (commandNum){
+    case 0:
+      add(main);
+    case 1:
+      if (main.empty()){
+	cout << emptyList << endl;
+      } else {
+	search(main,searchOutput);
+	searchOutput = {};
+      }
+    case 2:
+      if (main.empty()){
+        cout << emptyList << endl;
+      } else {
+        remove(main);
+      }
+    case 3:
+      if(getYN(quitYN)){
+	running = false;
+	cout << goodbye << endl;
+      }
+    }
+  }
 }
