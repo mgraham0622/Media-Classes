@@ -73,7 +73,27 @@ void getIntInput(int &input, char prompt[]){
   }
 }
 
-void search(const vector<media*> input, vector<media*> output){
+// gets float input using a passed in prompt and assigns it to a float passed in
+void getFloatInput(float &input, char prompt[]){
+  bool noinput = true;
+  char error[22] = "Enter a Valid Number!";
+  // checks that input is valid and dosent leave anything in the buffer
+  while (noinput){
+    cout << prompt;
+    cin >> input;
+    if (cin.fail() or cin.peek() != '\n'){
+      cout << error << endl;
+      cin.clear();
+    } else {
+      noinput = false;
+    }
+    // removes trailing newline from input buffer
+    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+  }
+}
+
+
+void search(const vector<media*> input, vector<media*> &output){
   char titleYN[35] = "search by title? (y/n): ";
   char titlePr[35] = "enter title: ";
   char yearYN[35] = "search by year? (y/n): ";
@@ -91,31 +111,80 @@ void search(const vector<media*> input, vector<media*> output){
   vector<media*> temp = {};
   // a list holding all class 'id's' returned by get_type, 0 is media, 1 is game, 2 is music, 3 is movie
   vector<int> possibleClasses = {0,1,2,3};
+  char word[] = "";
+  int number = 0;
+  float decimal = 0.0;
+
+  // all media match
   output = input;
-  if (getYN(titleYN) == true){}
-  if (getYN(yearYN) == true){}
+  
+  if (getYN(titleYN) == true){
+    //get title
+    getTextInput(word,titlePr);
+    
+  }
+  if (getYN(yearYN) == true){
+    //get year
+  }
   if (getYN(publisherYN) == true){
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
-    if (ranges::find(possibleClasses,3) != possibleClasses.end()){}
+    // eliminate standard media
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,0));
+    }
+    // eliminate movies
+    if (ranges::find(possibleClasses,3) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,3));
+    }
+    //get publisher
   }
   if (getYN(durationYN) == true){
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
+    // eliminate standard media
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,0));
+    }
+    // eliminate video games
+    if (ranges::find(possibleClasses,1) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,1));
+    }
+    //get duration
   }
   if (getYN(ratingYN) == true){
-    if (ranges::find(possibleClasses,0) != possibleClasses.end()){}
+    // eliminate standard media
+    if (ranges::find(possibleClasses,0) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,0));
+    }
+    //eliminate music
+    if (ranges::find(possibleClasses,2) != possibleClasses.end()){
+      possibleClasses.erase(ranges::find(possibleClasses,2));
+    }
+    // get rating
   }
   if (getYN(directorYN) == true){
+    // eliminate everything but movies
     if (ranges::find(possibleClasses,3) != possibleClasses.end()){
       possibleClasses = {3};
     } else {
       possibleClasses = {};
    }
+    // get director
   }
   if (getYN(artistYN) == true){
+    // eliminate everything but music
     if (ranges::find(possibleClasses,2) != possibleClasses.end()){
       possibleClasses = {2};
     } else {
       possibleClasses = {};
+    }
+    // get artist
+  }
+  if (output.empty()){
+    char emptyPrompt[32] = "No Results Matched Your Search.";
+    cout << emptyPrompt << endl;
+  } else {
+    char resultsPrompt[36] = "These are the Results that Matched:";
+    cout << resultsPrompt << endl;
+    for (auto it = output.begin(); it != output.end(); it++){
+      cout << (**it);
     }
   }
 }
