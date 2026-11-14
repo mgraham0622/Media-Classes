@@ -52,3 +52,12 @@ void Media::get_title(char* returnString){
 int Media::get_type(){
   return 0;
 }
+void Media::get_publisher(char* returnString){}
+
+int Media::get_duration(){return 0;}
+
+float Media::get_rating(){return 0;}
+
+void Media::get_director(char* returnString){}
+
+void Media::get_artist(char* returnString){}

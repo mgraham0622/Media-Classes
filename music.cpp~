@@ -15,11 +15,12 @@ ostream& operator<<(ostream& os, const Music& source){
   char durationLabel[11] = "Duration: ";
   char publisherLabel[12] = "Publisher: ";
   char artistLabel[9] = "Artist: ";
+  char secondsLabel[9] = " seconds";
   os << endcap << endl;
   os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
-  os << durationLabel << source.duration << endl;
+  os << durationLabel << source.duration << secondsLabel << endl;
   os << publisherLabel << source.publisher << endl;
   os << artistLabel << source.artist << endl;
   os << endcap;

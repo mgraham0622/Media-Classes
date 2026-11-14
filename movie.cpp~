@@ -15,13 +15,14 @@ ostream& operator<<(ostream& os, const Movie& source){
   char ratingLabel[9] = "Rating: ";
   char directorLabel[11] = "Director: ";
   char durationLabel[11] = "Duration: ";
+  char secondsLabel[9] = " seconds";
   os << endcap << endl;
   os << mediaLabel << endl;
   os << titleLabel << source.title << endl;
   os << yearLabel << source.year << endl;
   os << ratingLabel << source.rating << endl;
   os << directorLabel << source.director << endl;
-  os << durationLabel << source.duration << endl;
+  os << durationLabel << source.duration << secondsLabel << endl;
   os << endcap;
   return os << endl;
 }

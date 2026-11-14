@@ -37,7 +37,16 @@ public:
   void get_title(char* returnString);
   // virtual function to tell what type/child of media class this is
   virtual int get_type();
-  
+
+  virtual void get_publisher(char* returnString);
+
+  virtual int get_duration();
+
+  virtual float get_rating();
+
+  virtual void get_director(char* returnString);
+
+  virtual void get_artist(char* returnString);
 };
 
 #endif
