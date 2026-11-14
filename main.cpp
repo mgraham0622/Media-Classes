@@ -11,45 +11,29 @@
 
 using namespace std;
 
-void strip(char (&input)[99]){
+void strip(char* input){
   // establishes variables used
-  char temp[99] = "";
+  char* temp = new char[strlen(input)+1];
   int length;
+  int newLength = 0;
   char ch1;
 
   // gets length of the input carray
   length = strlen(input);
-
+  
   // goes through and capitalizes alphanumeric characters and adds them to output
   for(int i = 0; i<length; i++){
     ch1 = input[i];
     if(isalnum(ch1)){
       ch1 = toupper(ch1);
-      strncat(temp,&ch1,1);
+      temp[newLength] = ch1;
+      newLength += 1;
     }
   }
+  temp[newLength] = '\0';
   // sets input to the output
   strcpy(input,temp);
-}
-
-
-void lower(char (&input)[99]){
-  // establishes variables used
-  char temp[99] = "";
-  int length;
-  char ch1;
-
-  // gets length of the input carray
-  length = strlen(input);
-
-  // goes through and makes uppercase chars lowercase
-  for(int i = 0; i<length; i++){
-    ch1 = input[i];
-    ch1 = tolower(ch1);
-    strncat(temp,&ch1,1);
-    }
-  // sets input to the output
-  strcpy(input,temp);
+  delete[] temp;
 }
 
 bool getYN(const char prompt[] = "y/n?: "){
@@ -72,9 +56,9 @@ bool getYN(const char prompt[] = "y/n?: "){
 }
 
 // gets text input using a passed in prompt and assigns it to the char passed in
-void getTextInput(char (&input)[], char prompt[]){
+void getTextInput(char* input, char prompt[]){
   cout << prompt;
-  cin.getline(input,numeric_limits<streamsize>::max());
+  cin.getline(input,sizeof(input));
 }
 
 
@@ -135,8 +119,8 @@ void search(const vector<Media*> input, vector<Media*> &output){
   vector<Media*> temp = {};
   // a list holding all class 'id's' returned by get_type, 0 is media, 1 is game, 2 is music, 3 is movie
   vector<int> possibleClasses = {0,1,2,3};
-  char word[99];
-  char returnWord[99];
+  char word[256];
+  char returnWord[256];
   int number = 0;
   float decimal = 0.0;
 
@@ -300,26 +284,31 @@ void remove(vector<Media*> &input){
   char confirmation[32] = "Do you want to delete? (y/n)?: ";
   char success[15] = "Items Deleted!";
   char noDelete[26] = "Items will Not be Deleted";
+  char noResults[19] = "No Items to Delete";
   vector<Media*> toDelete = {};
   cout << deletePrompt << endl;
   search(input,toDelete);
-  if (getYN(confirmation) == true){
-    for (auto del = toDelete.begin(); del != toDelete.end(); del++){
-      auto it = find(input.begin(),input.end(),(*del));
-      if (it != input.end()){
-	delete (*it);
-	input.erase(it);
-      }
-    }
-    cout << success << endl;
+  if (toDelete.empty()){
+    cout << noResults << endl;
   } else {
-    cout << noDelete << endl;
+    if (getYN(confirmation) == true){
+      for (auto del = toDelete.begin(); del != toDelete.end(); del++){
+	auto it = find(input.begin(),input.end(),(*del));
+	if (it != input.end()){
+	  delete (*it);
+	  input.erase(it);
+	}
+      }
+      cout << success << endl;
+    } else {
+      cout << noDelete << endl;
+    }
   }
 }
 
 void add(vector<Media*> &input){
   char typeToAddPrompt[60] = "What Would You Like to Add? GAME, MUSIC, MOVIE, or MEDIA?: ";
-  char type[99];
+  char type[256];
   char tryAgainPrompt[29] = "Not a Valid Type! Try Again!";
   char success[15] = "Object Added!";
   bool hasType = false;
@@ -334,12 +323,12 @@ void add(vector<Media*> &input){
   char directorPr[35] = "enter director name: ";
   char artistPr[35] = "enter artist name: ";
 
-  char title[99];
+  char title[256];
   int year = -1;
-  char artist[99];
+  char artist[256];
   int duration = -1;
-  char publisher[99];
-  char director[99];
+  char publisher[256];
+  char director[256];
   float rating = -1.0;
 
   
@@ -399,7 +388,7 @@ int main(){
   char emptyList[22] = "The Database is Empty";
   char quitYN[38] = "Are You Sure You Want To Quit?(y/n): ";
   char goodbye[9] = "Goodbye!";
-  char command[99];
+  char command[256];
   int commandNum = -1;
   vector<const char*> commands = {"ADD","SEARCH","DELETE","QUIT"};
   vector<Media*> main = {};
@@ -437,10 +426,10 @@ int main(){
       if(getYN(quitYN)){
 	running = false;
 	cout << goodbye << endl;
-	for (auto it = main.begin(); it != main.end; it++){
+	for (auto it = main.begin(); it != main.end(); it++){
 	  delete (*it);
-	  input.erase(it);
 	}
+	main.clear();
       }
       break;
     }

@@ -36,8 +36,8 @@ Music::Music(const Music& source):Media(source){
   this->duration = source.duration;
   this->publisher = new char[strlen(source.publisher)+1];
   strcpy(this->publisher,source.publisher);
-  this->artist = new char[strlen(artist)+1];
-  strcpy(this->artist,artist);
+  this->artist = new char[strlen(source.artist)+1];
+  strcpy(this->artist,source.artist);
 }
 
 Music& Music::operator=(const Music& source){
@@ -50,8 +50,8 @@ Music& Music::operator=(const Music& source){
     this->publisher = new char[strlen(source.publisher)+1];
     strcpy(this->publisher,source.publisher);
     delete[] this->artist;
-    this->artist = new char[strlen(artist)+1];
-    strcpy(this->artist,artist);
+    this->artist = new char[strlen(source.artist)+1];
+    strcpy(this->artist,source.artist);
     return *this;
   }
 }
@@ -68,7 +68,7 @@ void Music::get_publisher(char* returnString){
   strcpy(returnString,this->publisher);
 }
 void Music::get_artist(char* returnString){
-  strcpy(returnString,this->publisher);
+  strcpy(returnString,this->artist);
 }
 int Music::get_type(){
   return 2;
